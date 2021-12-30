@@ -1,12 +1,13 @@
-FROM ubuntu:18
+FROM ubuntu:18.04
 
 MAINTAINER Basio
 
-RUN set -ex \
-   apt update && apt install -qqy \
+RUN set -ex &&\
+   apt-get update && apt-get install -y \
     wget \
     unzip \
-    build-essential
+    build-essential\
+    software-properties-common
 
 # Install TRF 
 WORKDIR /usr/local/bin
@@ -15,14 +16,12 @@ RUN wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 t
 # Basic workdir
 WORKDIR /usr/local
 
-
 # Install RMBlast
 RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/rmblast/2.2.28/ncbi-rmblastn-2.2.28-x64-linux.tar.gz && \
     tar -xzvf ncbi-rmblastn* && \
     rm ncbi-rmblastn*.tar.gz && \
     mv ncbi-rmblastn*/bin/rmblastn bin && \
     rm -rf ncbi-rmblastn    
-
     
 # Install RepeatMasker
 RUN wget http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz \
@@ -32,7 +31,7 @@ RUN wget http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz \
 	-e 's/\/usr\/local\/rmblast/\/usr\/local\/bin/g;' \
     -e 's/DEFAULT_SEARCH_ENGINE = "crossmatch"/DEFAULT_SEARCH_ENGINE = "ncbi"/g;' \
     -e 's/TRF_PRGM = ""/TRF_PRGM = "\/usr\/local\/bin\/trf"/g;' RepeatMasker/RepeatMaskerConfig.tmpl > RepeatMasker/RepeatMaskerConfig.pm
-
+    
 # Fix RepeatMasker's strange shebang lines
 RUN cd /usr/local/RepeatMasker \
 	&& perl -i -0pe 's/^#\!.*perl.*/#\!\/usr\/bin\/env perl/g' \
@@ -45,27 +44,6 @@ RUN cd /usr/local/RepeatMasker \
     util/queryTaxonomyDatabase.pl \
     util/rmOutToGFF3.pl \
     util/rmToUCSCTables.pl
-
-# Install RIPcal
-RUN wget http://downloads.sourceforge.net/project/ripcal/RIPCAL/RIPCAL_2.0/ripcal2_install.zip \
-	&& unzip ripcal*.zip \
-	&& rm ripcal*.zip \
-	&& mv ripcal* ripcal \
-	&& cd ripcal \
-	&& chmod +x perl/*
-
-# Install RECON
-RUN wget http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz \
-	&& tar -xvf RECON* \
-	&& rm RECON*.tar.gz \
-	&& mv RECON* recon \
-	&& cd recon/src \
-	&& make \
-	&& make install \
-	&& perl -i -0pe 's/\$path = "";/\$path = "\/usr\/local\/RECON-1.08\/bin";/g' ../scripts/\recon.pl
-
-
-
 # I can't bundle the girinst RepBase libraries with the docker image,
 # so you'll need to get them yourself. Download them from
 # http://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-20170127.tar.gz
@@ -78,3 +56,13 @@ ONBUILD RUN cd /usr/local/RepeatMasker && util/buildRMLibFromEMBL.pl Libraries/R
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/RepeatMasker:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler
 #ENTRYPOINT ["/usr/local/RepeatMasker/RepeatMasker"]
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y cd-hit
+ENV R_APT_KEY E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${R_APT_KEY} && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/' && apt update && apt install -y r-base
+
+RUN R -e 'install.packages("readr");' && \
+    R -e 'install.packages("plyr");' && \
+    R -e 'install.packages("fitdistrplus");'
+
+ENTRYPOINT ["/bin/bash"] 
