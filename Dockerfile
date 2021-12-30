@@ -24,14 +24,13 @@ WORKDIR /usr/local
 
 # Install RMBlast
 RUN wget ${RMBAST_TGZ} && \
-    tar -xzvf ncbi-rmblastn* && \
-    rm ncbi-rmblastn*.tar.gz && \
-    mv ncbi-rmblastn*/bin/rmblastn bin 
+    tar -xzvf rmblast* && \
+    mv ncbi-rmblast*/bin/rmblastn bin 
     
 # Install RepeatMasker
 RUN wget ${REPEATMASKER_TGZ} \
-    && tar -xzvf RepeatMasker-open*.tar.gz \
-	&& rm -f RepeatMasker-open*.tar.gz \
+    && tar -xzvf RepeatMasker*.tar.gz \
+	&& rm -f RepeatMasker*.tar.gz \
 	&& perl -0p -e 's/\/usr\/local\/hmmer/\/usr\/bin/g;' \
 	-e 's/\/usr\/local\/rmblast/\/usr\/local\/bin/g;' \
     -e 's/DEFAULT_SEARCH_ENGINE = "crossmatch"/DEFAULT_SEARCH_ENGINE = "ncbi"/g;' \
