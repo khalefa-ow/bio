@@ -23,14 +23,13 @@ RUN wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 t
 WORKDIR /usr/local
 
 # Install RMBlast
-RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/rmblast/2.2.28/ncbi-rmblastn-2.2.28-x64-linux.tar.gz && \
+RUN wget ${RMBAST_TGZ} && \
     tar -xzvf ncbi-rmblastn* && \
     rm ncbi-rmblastn*.tar.gz && \
-    mv ncbi-rmblastn*/bin/rmblastn bin && \
-    rm -rf ncbi-rmblastn    
+    mv ncbi-rmblastn*/bin/rmblastn bin 
     
 # Install RepeatMasker
-RUN wget http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz \
+RUN wget ${REPEATMASKER_TGZ} \
     && tar -xzvf RepeatMasker-open*.tar.gz \
 	&& rm -f RepeatMasker-open*.tar.gz \
 	&& perl -0p -e 's/\/usr\/local\/hmmer/\/usr\/bin/g;' \
