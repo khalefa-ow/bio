@@ -1,14 +1,14 @@
-FROM ubuntu:14.04
+FROM ubuntu:18
 
 MAINTAINER Basio
 
 RUN set -ex \
-	apt-get update && apt-get install -qqy \
+   apt update && apt install -qqy \
     wget \
     unzip \
     build-essential
 
-# Install TRF (for RepeatScout)
+# Install TRF 
 WORKDIR /usr/local/bin
 RUN wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 trf && chmod +x trf
 
