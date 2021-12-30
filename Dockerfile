@@ -5,7 +5,6 @@ MAINTAINER Basio
 RUN set -ex \
 	apt-get update && apt-get install -qqy \
     wget \
-    hmmer \
     unzip \
     build-essential
 
