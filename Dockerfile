@@ -27,7 +27,7 @@ WORKDIR /usr/local
 # Install RMBlast
 RUN wget ${RMBAST_TGZ} && \
     tar -xzvf rmblast* && \
-    mv ncbi-rmblast*/bin/rmblastn bin 
+    mv rmblast*/bin/rmblastn bin 
     
 # Install RepeatMasker
 RUN wget ${REPEATMASKER_TGZ} \
