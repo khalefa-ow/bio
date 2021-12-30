@@ -7,7 +7,10 @@ RUN set -ex &&\
     wget \
     unzip \
     build-essential\
-    software-properties-common
+    software-properties-common \
+    git \
+    cd-hit
+    
 
 # Install TRF 
 WORKDIR /usr/local/bin
@@ -57,12 +60,15 @@ ONBUILD RUN cd /usr/local/RepeatMasker && util/buildRMLibFromEMBL.pl Libraries/R
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/RepeatMasker:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler
 #ENTRYPOINT ["/usr/local/RepeatMasker/RepeatMasker"]
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y cd-hit
+#RUN apt-get update && apt-get install -y cd-hit
+# install R-script
 ENV R_APT_KEY E298A3A825C0D65DFD57CBB651716619E084DAB9
 RUN  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${R_APT_KEY} && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/' && apt update && apt install -y r-base
-
 RUN R -e 'install.packages("readr");' && \
     R -e 'install.packages("plyr");' && \
     R -e 'install.packages("fitdistrplus");'
+    
+RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x TERAD && ./TERAD test_file.fasta 4 ./arthro_ES_ND_PV_classified.fa none 
+
 
 ENTRYPOINT ["/bin/bash"] 
