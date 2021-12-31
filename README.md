@@ -2,6 +2,6 @@
 
 
 
-docker build -t TERAD .
+docker build -t terad .
 
-docker run --interactive --tty --entrypoint /bin/bash TERAD
+docker run --interactive --tty --entrypoint /bin/bash terad
