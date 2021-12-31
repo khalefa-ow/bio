@@ -22,13 +22,14 @@ ENV BLAST_TGZ ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-bla
 WORKDIR /usr/local/bin
 RUN wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 trf && chmod +x trf
 
-# Install Blast+
-RUN wget $(BLAST_TGZ} && \
-    tar -xzvf ncbi-blast* && \
-    find ncbi-blast* -type f -executable -exec mv {} bin \; && \  
 
 # Basic workdir
 WORKDIR /usr/local
+
+# Install Blast+
+RUN wget $(BLAST_TGZ} && \
+    tar -xzvf ncbi-blast* && \
+    find ncbi-blast* -type f -executable -exec mv {} bin \; 
 
 # Install RMBlast
 RUN wget ${RMBAST_TGZ} && \
