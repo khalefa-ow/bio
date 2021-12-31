@@ -26,10 +26,6 @@ RUN wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 t
 # Basic workdir
 WORKDIR /usr/local
 
-# Install Blast+
-RUN wget $(BLAST_TGZ} && \
-    tar -xzvf ncbi-blast* && \
-    find ncbi-blast* -type f -executable -exec mv {} bin \; 
 
 # Install RMBlast
 RUN wget ${RMBAST_TGZ} && \
@@ -77,6 +73,11 @@ RUN  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${R_APT_KEY} && ad
 RUN R -e 'install.packages("readr");' && \
     R -e 'install.packages("plyr");' && \
     R -e 'install.packages("fitdistrplus");'
+    
+    # Install Blast+
+RUN wget $(BLAST_TGZ} && \
+    tar -xzvf ncbi-blast* && \
+    find ncbi-blast* -type f -executable -exec mv {} bin \;
     
 RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x TERAD && ./TERAD test_file.fasta 4 ./arthro_ES_ND_PV_classified.fa none 
 
