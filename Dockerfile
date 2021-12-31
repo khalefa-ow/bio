@@ -50,9 +50,13 @@ RUN cd /usr/local/RepeatMasker && ./configure -trf_prgm /usr/local/bin/trf -rmbl
 RUN pip3 install h5py
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/RepeatMasker:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler
-
+RUN apt-get update && apt-get install libidn11
 # Install TERAD
-RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x TERAD && ./TERAD test_file.fasta 4 ./arthro_ES_ND_PV_classified.fa none 
+RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x TERAD \
+    unzip arthro_ES_ND_PV*.zip 
+
+
+RUN  ./TERAD test_file.fasta 4 ./arthro_ES_ND_PV_classified.fa none 
 # I can't bundle the girinst RepBase libraries with the docker image,
 # so you'll need to get them yourself. Download them from
 # http://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-20170127.tar.gz
