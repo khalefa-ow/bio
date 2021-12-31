@@ -9,17 +9,23 @@ RUN set -ex &&\
     build-essential\
     software-properties-common \
     git \
-    cd-hit
+    cd-hit \
+    python3-pip 
     
 ENV RMBAST_TGZ http://www.repeatmasker.org/rmblast-2.11.0+-x64-linux.tar.gz
 #ENV REPEATMASKER_TGZ https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.0.tar.gz 
 ENV REPEATMASKER_TGZ https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz 
 
-ENV BLAST_TGZ https://ftp.ncbi.nlm.nih.gov/blast/executables/LATEST/ncbi-blast-2.12.0+-x64-linux.tar.gz
+ENV BLAST_TGZ ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-x64-linux.tar.gz 
 
 # Install TRF 
 WORKDIR /usr/local/bin
 RUN wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 trf && chmod +x trf
+
+# Install Blast+
+RUN wget $(BLAST_TGZ} && \
+    tar -xzvf ncbi-blast* && \
+    find ncbi-blast* -type f -executable -exec mv {} bin \; && \  
 
 # Basic workdir
 WORKDIR /usr/local
