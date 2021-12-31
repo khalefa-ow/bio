@@ -10,7 +10,8 @@ RUN set -ex &&\
     software-properties-common \
     git \
     cd-hit \
-    python3-pip 
+    python3-pip \
+    libidn11
     
 ENV RMBAST_TGZ http://www.repeatmasker.org/rmblast-2.11.0+-x64-linux.tar.gz
 ENV REPEATMASKER_TGZ https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz 
@@ -34,7 +35,7 @@ WORKDIR /usr/local
 # Install Blast+
 RUN wget ${BLAST_TGZ}  && \
     tar -xzvf ncbi-blast* && \
-    find ncbi-blast* -type f -executable -exec mv {} bin \;    
+    find ncbi-blast* -type f -executable -exec mv {} bin \;
 
 # Install RMBlast
 RUN wget ${RMBAST_TGZ} && \
@@ -49,14 +50,14 @@ RUN cd /usr/local/RepeatMasker && ./configure -trf_prgm /usr/local/bin/trf -rmbl
 
 RUN pip3 install h5py
 
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/RepeatMasker:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler
-RUN apt-get update && apt-get install libidn11
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/RepeatMasker
+
 # Install TERAD
-RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x TERAD \
+RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x TERAD &&\
     unzip arthro_ES_ND_PV*.zip
-
-
+# Run TERAD
 RUN  ./TERAD test_file.fasta 4 ./arthro_ES_ND_PV_classified.fa none
+
 # I can't bundle the girinst RepBase libraries with the docker image,
 # so you'll need to get them yourself. Download them from
 # http://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-20170127.tar.gz
