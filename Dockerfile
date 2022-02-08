@@ -11,7 +11,12 @@ RUN set -ex &&\
     git \
     cd-hit \
     python3-pip \
-    libidn11
+    libidn11 \ 
+    time \
+    vim \
+    sysstat
+    
+RUN echo ' ENABLED="true" '  > /etc/default/sysstat
     
 ENV RMBAST_TGZ http://www.repeatmasker.org/rmblast-2.11.0+-x64-linux.tar.gz
 ENV REPEATMASKER_TGZ https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz 
