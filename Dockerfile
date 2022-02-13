@@ -77,7 +77,7 @@ RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x T
 
 COPY TERAD1 TERAD
 COPY install.sh TERAD
-COPY convert.sh TERAD
+COPY convert.py TERAD
 COPY run.sh TERAD
 RUN chmod +x TERAD/TERAD1 TERAD/*.sh
 ENTRYPOINT ["/bin/bash"] 
