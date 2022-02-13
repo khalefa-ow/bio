@@ -54,6 +54,7 @@ RUN wget ${REPEATMASKER_TGZ} \
 RUN cd /usr/local/RepeatMasker && ./configure -trf_prgm /usr/local/bin/trf -rmblast_dir /usr/local/bin/ -default_search_engine rmblast 	
 
 RUN pip3 install h5py
+RUN pip3 install pandas
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/RepeatMasker
 
