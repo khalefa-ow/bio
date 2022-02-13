@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -f test.txt
 FILE=${1?Error: No filename given.}
 CORE=${2?Error: No core given.}
 echo "file: $FILE"
