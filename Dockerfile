@@ -14,7 +14,8 @@ RUN set -ex &&\
     libidn11 \ 
     time \
     vim \
-    sysstat
+    sysstat \
+    screen
     
 RUN echo ' ENABLED="true" '  > /etc/default/sysstat
     
