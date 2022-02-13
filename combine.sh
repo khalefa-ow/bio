@@ -6,3 +6,5 @@ echo "step: 4"
 cat s4.txt
 echo "step: 5"
 cat s5.txt
+echo 'step: "all"'
+cat all.txt
