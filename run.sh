@@ -10,7 +10,9 @@ echo "core; $CORE"
 ./combine.sh
 
 
-./convert.py
+python convert.py
 
 
 mv f.csv process_${FILE}__${CORE}.csv
+
+
