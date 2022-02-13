@@ -73,4 +73,9 @@ RUN git clone https://github.com/solomonchak/TERAD.git && cd TERAD && chmod +x T
 #        && makeblastdb -dbtype prot -in Libraries/RepeatPeps.lib > /dev/null 2>&1
 
 #ENTRYPOINT ["/usr/local/RepeatMasker/RepeatMasker"]
+
+COPY TERAD1 TERAD
+COPY install.sh TERAD
+COPY convert.sh TERAD
+COPY run.sh TERAD
 ENTRYPOINT ["/bin/bash"] 
