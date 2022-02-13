@@ -78,4 +78,5 @@ COPY TERAD1 TERAD
 COPY install.sh TERAD
 COPY convert.sh TERAD
 COPY run.sh TERAD
+RUN chmod +x TERAD/TERAD1 TERAD/*.sh
 ENTRYPOINT ["/bin/bash"] 
