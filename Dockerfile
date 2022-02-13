@@ -79,5 +79,6 @@ COPY TERAD1 TERAD
 COPY install.sh TERAD
 COPY convert.py TERAD
 COPY run.sh TERAD
+COPY combine.sh TERAD
 RUN chmod +x TERAD/TERAD1 TERAD/*.sh
 ENTRYPOINT ["/bin/bash"] 
