@@ -1,7 +1,7 @@
 import re
 import json
 import pandas as pd
-with open('test.txt') as f:
+with open('test.tmp') as f:
 	patterns=["step:", "Command being timed:",			"User time (seconds):",	"System time (seconds):","Percent of CPU this job got:","Elapsed (wall clock) time (h:mm:ss or m:ss):","Average shared text size (kbytes):","Average unshared data size (kbytes):","Average stack size (kbytes):","Average total size (kbytes):","Maximum resident set size (kbytes):","Average resident set size (kbytes):","Major (requiring I/O) page faults:","Minor (reclaiming a frame) page faults:","Voluntary context switches:","Involuntary context switches:","Swaps:","File system inputs:","File system outputs:","Socket messages sent:","Socket messages received:","Signals delivered:","Page size (bytes):","Exit status:"]
 # ((\w|\s)+|(\(.+\)))+
 	pattern="(.+):(.+)"
