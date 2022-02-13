@@ -59,7 +59,7 @@ echo "
 ### Step 1/5: Clustering with cd-hit 
 ########################################
 "
-/usr/bin/time -v --output=s1.txt cd-hit-est -i $FILE -d 0 -o ./"$FILE".cd -c 0.95 -G 0 -n 9 -r 0 -g 1 -A 40 -p 1 -M 0 -T $CORE
+/usr/bin/time -v --output=s1.tmp cd-hit-est -i $FILE -d 0 -o ./"$FILE".cd -c 0.95 -G 0 -n 9 -r 0 -g 1 -A 40 -p 1 -M 0 -T $CORE
 
 echo "
 
@@ -81,11 +81,11 @@ echo "
 if [ "$4" = "none" ] ; then
 	echo "Custom TE database specified, ignored TE query species ***
 	"
-	/usr/bin/time -v --output=s31.txt RepeatMasker -pa $CORE -s -lib $LIB -dir . -x "$FILE".cd > ./"$FILE".cd.RM.progress
+	/usr/bin/time -v --output=s31.tmp RepeatMasker -pa $CORE -s -lib $LIB -dir . -x "$FILE".cd > ./"$FILE".cd.RM.progress
 else
 	echo "No custom TE database specified, using the provided TE query species: $4 ***
 	"
-	/usr/bin/time -v --output=s32.txt RepeatMasker -pa $CORE -s -species $SP -dir . -x "$FILE".cd > ./"$FILE".cd.RM.progress
+	/usr/bin/time -v --output=s32.tmp RepeatMasker -pa $CORE -s -species $SP -dir . -x "$FILE".cd > ./"$FILE".cd.RM.progress
 fi
 
 
@@ -96,7 +96,7 @@ echo "
 ########################################
 "
 # in some case it has no hit 
-/usr/bin/time -v --output=s4.txt RepeatProteinMask -engine ncbi "$FILE".cd.masked > ./"$FILE".cd.masked.protM.progress  
+/usr/bin/time -v --output=s4.tmp RepeatProteinMask -engine ncbi "$FILE".cd.masked > ./"$FILE".cd.masked.protM.progress  
 
 
 echo "
@@ -105,7 +105,7 @@ echo "
 ### Step 5/5: Calculating summary
 ########################################
 "
-/usr/bin/time -v --output=s5.txt Rscript RAD_TE_summary.R "$FILE".cd.summary2 "$FILE".cd.out "$FILE".cd.masked.annot
+/usr/bin/time -v --output=s5.tmp Rscript RAD_TE_summary.R "$FILE".cd.summary2 "$FILE".cd.out "$FILE".cd.masked.annot
 
 
 echo "
