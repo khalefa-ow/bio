@@ -7,7 +7,7 @@ echo "core; $CORE"
 
 /usr/bin/time -v --output=all.txt ./TERAD1 $FILE $CORE ./arthro_ES_ND_PV_classified.fa none
 
-./combine.sh
+./combine.sh > test.txt
 
 
 python convert.py
