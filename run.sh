@@ -6,7 +6,7 @@ CORE=${2?Error: No core given.}
 echo "file: $FILE"
 echo "core; $CORE"
 
-/usr/bin/time -v --output=all.txt ./TERAD1 $FILE $CORE ./arthro_ES_ND_PV_classified.fa none
+/usr/bin/time -v --output=all.tmp ./TERAD1 $FILE $CORE ./arthro_ES_ND_PV_classified.fa none
 
 ./combine.sh > test.tmp
 
