@@ -11,8 +11,10 @@ echo "core; $CORE"
 ./combine.sh > test.txt
 
 
-python convert.py
+python3 convert.py
 
+
+rm -f *.txt
 
 mv f.csv process_${FILE}__${CORE}.csv
 
