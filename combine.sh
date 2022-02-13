@@ -1,10 +1,11 @@
-echo "step: 1"
+printf "\n step: 1 \n"
 cat s1.txt
-echo "step: 3"
-cat s3.txt
-echo "step: 4"
+printf "\n step: 3 \n"
+cat s31.txt
+cat 32.txt
+printf "\n step: 4 \n"
 cat s4.txt
-echo "step: 5"
+printf "\n step: 5 \n"
 cat s5.txt
-echo 'step: "all"'
+printf '\n step: "all" \n'
 cat all.txt
