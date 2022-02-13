@@ -8,6 +8,6 @@ printf "\n step: 3 \n"
 printf "\n step: 4 \n"
 [ -f s4.tmp ] && cat s4.tmp
 printf "\n step: 5 \n"
-[ -f s5.tmp ] && cat s5.txt
+[ -f s5.tmp ] && cat s5.tmp
 printf '\n step: "all" \n'
 [ -f all.tmp ] && cat all.tmp
