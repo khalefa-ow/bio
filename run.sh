@@ -9,12 +9,10 @@ echo "core; $CORE"
 /usr/bin/time -v --output=all.tmp ./TERAD1 $FILE $CORE ./arthro_ES_ND_PV_classified.fa none
 
 ./combine.sh > test.tmp
+rm -f f.csv
+[ -f test.tmp ] && python3 convert.py
 
-
-python3 convert.py
-
-
-rm -f *.tmp
+[ -f f.csv ] && rm -f *.tmp
 
 mv f.csv process_${FILE}__${CORE}.csv
 
